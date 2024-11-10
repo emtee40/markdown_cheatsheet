@@ -1,16 +1,16 @@
 Please add any tips and tricks that you come up with. For now it'll be a flat list and we'll add structure as needed.
 
-##### Table of Contents  
+##### Table of Contents
 
-[Pasting from Clipboard (without tears)](#pasting)  
-[Using an email signature](#sigs)  
-[Footnotes](#footnotes)  
-[Using other TeX math formulae renderers](#tex)  
-[Changing the Main Font (and other overall styles)](#mainfont)  
-[Getting fancy with inline HTML](#inlinehtml)  
-[Cool CSS stuff](#css)  
-[Creating more complex tables](#tables)  
-[Getting original Markdown from sent email](#post-send-md)  
+[Pasting from Clipboard (without tears)](#pasting)
+[Using an email signature](#sigs)
+[Footnotes](#footnotes)
+[Using other TeX math formulae renderers](#tex)
+[Changing the Main Font (and other overall styles)](#mainfont)
+[Getting fancy with inline HTML](#inlinehtml)
+[Cool CSS stuff](#css)
+[Creating more complex tables](#tables)
+[Getting original Markdown from sent email](#post-send-md)
 [Using Header Anchor Links](#header-anchors)
 
 <a name="pasting" href="#"></a>
@@ -49,7 +49,7 @@ Footnotes
 
 Below is a copy-paste of a workaround described in the [feature request/issue](https://github.com/adam-p/markdown-here/issues/94) for adding footnotes:
 
-I thought of a bit of a hack you can use to emulate your footnotes: put inline HTML `<sup>` tags<sup>1</sup>. What I just did there looks like this: `<sup>1</sup>`. Then you can put a numbered list<sup>2</sup> at the bottom with the actual footnotes. 
+I thought of a bit of a hack you can use to emulate your footnotes: put inline HTML `<sup>` tags<sup>1</sup>. What I just did there looks like this: `<sup>1</sup>`. Then you can put a numbered list<sup>2</sup> at the bottom with the actual footnotes.
 
 The numbered list in your original email had a larger left-side margin than mine will, but you could modify your "Primary Styling CSS" in the MDH options to and add something like `margin-left: 10em;` to the `ol` rule. But then it'd be like that for all your numbered lists.
 
@@ -69,7 +69,7 @@ Anyway, maybe this will help you and maybe it won't. It's probably more hassle t
 ---
 
 ```
-I thought of a bit of a hack you can use to emulate your footnotes: put inline HTML `<sup>` tags<sup>1</sup>. What I just did there looks like this: `<sup>1</sup>`. Then you can put a numbered list<sup>2</sup> at the bottom with the actual footnotes. 
+I thought of a bit of a hack you can use to emulate your footnotes: put inline HTML `<sup>` tags<sup>1</sup>. What I just did there looks like this: `<sup>1</sup>`. Then you can put a numbered list<sup>2</sup> at the bottom with the actual footnotes.
 
 The numbered list in your original email had a larger left-side margin than mine will, but you could modify your "Primary Styling CSS" in the MDH options to and add something like `margin-left: 10em;` to the `ol` rule. But then it'd be like that for all your numbered lists.
 
@@ -93,34 +93,35 @@ Anyway, maybe this will help you and maybe it won't. It's probably more hassle t
 Using other TeX math formulae renderers
 ======================
 
-The default Google Charts service that Markdown Here uses for TeX math rendering doesn't support all math symbols (like [`\cong`](https://github.com/adam-p/markdown-here/issues/199)), and doesn't provide very crisp images. It was chosen because it was thought (by me) to be the least bad option, privacy-wise (because you're probably already using Google for your email). However, there are other possibilities, if you're willing to accept the implications. 
+After Google shut down the Charts API that we were using, we switched the default renderer to CodeCogs; it has been around a long time and does a reasonably good job. However, there are other possibilities, if you're willing to accept the privacy and availabilty implications.
 
-[CodeCogs](http://www.codecogs.com/) supports a wider range of symbols (I think) and provides more rendering targets. You can fool around with its [equation editor here](http://www.codecogs.com/latex/eqneditor.php). To use CodeCogs to produce PNG images, set this in Markdown Here's "TeX Mathematical Formulae Support" option:
-
+[@uetchy](https://github.com/uetchy/math-api) has a [math API](https://math.vercel.app/home) with TeX URL support. The output looks really nice and crisp. (But they're hosting on ["pay-as-you-go"](https://github.com/adam-p/markdown-here/issues/261#issuecomment-531764974), so we're not going to make it the default.)
 ```no-highlight
-<img src="https://latex.codecogs.com/png.latex?{urlmathcode}" alt="{mathcode}">
+<img src="https://math.vercel.app/?bgcolor=auto&from={urlmathcode}.png" alt="{mathcode}">
 ```
 
-Using this will give you nice smooth SVG images, but note that they will get stripped out of email:
+WordPress has a [LaTeX renderer](https://wordpress.com/support/latex/) that can be accessed via URL. The output doesn't look any nicer than CodeCogs (to my eye) and it might be a violation of their usage policy (e.g., maybe it's only for paying customers).
+```no-highlight
+<img src="https://s0.wp.com/latex.php?zoom=3&bg=ffffff&fg=000000&s=0&latex={urlmathcode}" alt="{mathcode}">
+```
 
+You can use CodeCode to produce SVG output, which looks nicer. They will get stripped out of email, but you might be using MDH somewhere that they'll work:
 ```no-highlight
 <img src="https://latex.codecogs.com/svg.latex?{urlmathcode}" alt="{mathcode}">
 ```
 
 But please note a few important things:
 
-- You're in charge of making sure that you're not violating [CodeCogs' terms of use](http://www.codecogs.com/pages/agreements/termsofuse.php). You should also check out [their privacy policy](http://www.codecogs.com/pages/agreements/privacy_policy.php).
+- Whichever service you use, you're in charge of making sure you're not violating their Terms of Use. You should also check out their privacy policy.
 
-- Understand that CodeCogs will be able to see all of your formulae. They can also do things map your IP address to your formulae. And then they can record the IP addresses of the people that read your email and view the formulae. And so they can draw some conclusions that someone at your IP address working with people at your friends' IP addresses.
-
-For more discussion and technical info, see [issue #144](https://github.com/adam-p/markdown-here/issues/144).
+- Understand that the service provider will be able to see all of your formulae. They can also do things map your IP address to your formulae. And then they can record the IP addresses of the people that read your email and view the formulae. And so they can draw some conclusions that someone at your IP address working with people at your friends' IP addresses.
 
 
 <a name="mainfont" href="#"></a>
 Changing the Main Font (and other overall styles)
 ======================
 
-In the "Primary Styling CSS" section of the Markdown Here options page, there is a rule for `.markdown-here-wrapper` (that's empty by default). This rule should be used for styles that you want applied to your entire email (overridden by other styles, of course). 
+In the "Primary Styling CSS" section of the Markdown Here options page, there is a rule for `.markdown-here-wrapper` (that's empty by default). This rule should be used for styles that you want applied to your entire email (overridden by other styles, of course).
 
 So, if you wanted Verdana as your default font, you could set this:
 
@@ -164,7 +165,7 @@ TODO: More examples?
 
 ### Custom CSS classes
 
-In Markdown Here's "Primary Styling CSS" you can create custom CSS classes that apply to `<span>` elements that you use inline. 
+In Markdown Here's "Primary Styling CSS" you can create custom CSS classes that apply to `<span>` elements that you use inline.
 
 Let's say you want to the background color of some text in your email to be a nice gradient from light blue to light pink and have a big horrible border. You could create a CSS rule like this:
 
@@ -172,7 +173,7 @@ Let's say you want to the background color of some text in your email to be a ni
 .hi {
   background: linear-gradient(225deg, lightpink, lightblue);
   border: thick dotted purple;
-} 
+}
 ```
 
 And then use it in your email something like this:
@@ -218,7 +219,7 @@ If you want to style the salutation of your email differently from the rest of t
 Creating more complex tables
 ======================
 
-There is a [feature request](https://github.com/adam-p/markdown-here/issues/176) for adding the ability to span cells across rows and columns, but it hasn't yet been implemented. 
+There is a [feature request](https://github.com/adam-p/markdown-here/issues/176) for adding the ability to span cells across rows and columns, but it hasn't yet been implemented.
 
 Probably the best way to do rowspan and colspan right now is to use this [online HTML table generator](http://www.tablesgenerator.com/html_tables) to create your table, and then paste it into your email (or whatever) and use MDH to render it. *Make sure* to check the boxes for "Do not generate CSS" (because MDH provides the CSS) and "Compact mode" (to avoid MDH's multi-line HTML [problem](https://github.com/adam-p/markdown-here/issues/157)).
 

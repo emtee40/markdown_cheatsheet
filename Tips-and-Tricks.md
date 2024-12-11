@@ -2,16 +2,16 @@ Please add any tips and tricks that you come up with. For now it'll be a flat li
 
 ##### Table of Contents
 
-[Pasting from Clipboard (without tears)](#pasting)
-[Using an email signature](#sigs)
-[Footnotes](#footnotes)
-[Using other TeX math formulae renderers](#tex)
-[Changing the Main Font (and other overall styles)](#mainfont)
-[Getting fancy with inline HTML](#inlinehtml)
-[Cool CSS stuff](#css)
-[Creating more complex tables](#tables)
-[Getting original Markdown from sent email](#post-send-md)
-[Using Header Anchor Links](#header-anchors)
+[Pasting from Clipboard (without tears)](#pasting)<br>
+[Using an email signature](#sigs)<br>
+[Footnotes](#footnotes)<br>
+[Using other TeX math formulae renderers](#tex)<br>
+[Changing the Main Font (and other overall styles)](#mainfont)<br>
+[Getting fancy with inline HTML](#inlinehtml)<br>
+[Cool CSS stuff](#css)<br>
+[Creating more complex tables](#tables)<br>
+[Getting original Markdown from sent email](#post-send-md)<br>
+[Using Header Anchor Links](#header-anchors)<br>
 
 <a name="pasting" href="#"></a>
 Pasting from Clipboard (without tears)
